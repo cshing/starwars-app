@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import DisplayError from './DisplayError';
 
 const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 	const [list, setList] = useState({
@@ -71,11 +72,14 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 	return (
 		<>
 			<h2>{listTitle}</h2>
+
 			{list.loading ? (
 				<p>Loading...</p>
 			) : (
 				<ul>{list.data.length > 0 ? listData : noData}</ul>
 			)}
+
+			{list.error && <DisplayError error={list.error} />}
 		</>
 	);
 };

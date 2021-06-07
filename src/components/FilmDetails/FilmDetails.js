@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import Characters from './Characters';
 import ListComponent from '../Common/ListComponent';
+import DisplayError from '../Common/DisplayError';
 
 const initialState = {
 	title: '',
@@ -54,6 +54,7 @@ const FilmDetails = ({ match }) => {
 	return (
 		<>
 			<h1>Film Details Page</h1>
+
 			<h2>Metadata</h2>
 			{filmDetails.loading ? (
 				<p>Loading...</p>
@@ -68,8 +69,6 @@ const FilmDetails = ({ match }) => {
 				</>
 			)}
 
-			{/* <Characters charactersUrlArr={filmDetails.data.characters} /> */}
-			
 			<ListComponent
 				listTitle='Characters'
 				listEndpoints={filmDetails.data.characters}
@@ -92,6 +91,8 @@ const FilmDetails = ({ match }) => {
 				listTitle='Species'
 				listEndpoints={filmDetails.data.species}
 			/>
+
+			{filmDetails.error && <DisplayError error={filmDetails.error} />}
 		</>
 	);
 };
