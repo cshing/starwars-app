@@ -54,7 +54,9 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		fetchList();
 	}, [listEndpoints]);
 
-	const listData = list.data.map(list => {
+	const { data, loading, error } = list;
+
+	const listData = data.map(list => {
 		const listItem = list.name || list.title;
 		return withLink && pathname ? (
 			<li key={listItem}>
@@ -73,13 +75,13 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		<>
 			<h2>{listTitle}</h2>
 
-			{list.loading ? (
+			{loading ? (
 				<p>Loading...</p>
 			) : (
-				<ul>{list.data.length > 0 ? listData : noData}</ul>
+				<ul>{data.length > 0 ? listData : noData}</ul>
 			)}
 
-			{list.error && <DisplayError error={list.error} />}
+			{error && <DisplayError error={error} />}
 		</>
 	);
 };

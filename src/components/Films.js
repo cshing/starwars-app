@@ -10,12 +10,6 @@ const Films = () => {
 		error: ''
 	});
 
-	const [search, setSearch] = useState('');
-
-	const handleSearch = e => {
-		setSearch(e.target.value);
-	};
-
 	useEffect(() => {
 		const fetchFilms = async () => {
 			setFilms(prevState => ({
@@ -35,7 +29,15 @@ const Films = () => {
 		fetchFilms();
 	}, []);
 
-	let filteredFilms = films.data.filter(film => {
+	const [search, setSearch] = useState('');
+
+	const handleSearch = e => {
+		setSearch(e.target.value);
+	};
+
+	const { data, loading, error } = films;
+
+	let filteredFilms = data.filter(film => {
 		return film.title.toLowerCase().includes(search.toLowerCase());
 	});
 
@@ -53,8 +55,8 @@ const Films = () => {
 			<span>
 				Search: <input value={search} onChange={e => handleSearch(e)} />
 			</span>
-			{films.loading ? <p>Loading...</p> : <ul>{filmsData}</ul>}
-			{films.error && <DisplayError error={films.error} />}
+			{loading ? <p>Loading...</p> : <ul>{filmsData}</ul>}
+			{error && <DisplayError error={error} />}
 		</>
 	);
 };

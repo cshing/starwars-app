@@ -15,6 +15,8 @@ const initialState = {
 	starships: [],
 	vehicles: [],
 	species: []
+	// loading: false,
+	// error: ''
 };
 
 // React router pass two props to all the component - match, location
@@ -23,6 +25,7 @@ const FilmDetails = ({ match }) => {
 	const { title: filmTitle } = match.params;
 
 	const [filmDetails, setFilmDetails] = useState({
+		//initialState});
 		data: initialState,
 		loading: false,
 		error: ''
@@ -51,48 +54,38 @@ const FilmDetails = ({ match }) => {
 		fetchFilmDetails();
 	}, [filmTitle]);
 
+	const { data, loading, error } = filmDetails;
+
 	return (
 		<>
 			<h1>Film Details Page</h1>
 
 			<h2>Metadata</h2>
-			{filmDetails.loading ? (
+			{loading ? (
 				<p>Loading...</p>
 			) : (
 				<>
-					<p>Title: {filmDetails.data.title}</p>
-					<p>Episode: {filmDetails.data.episode_id}</p>
-					<p>Director: {filmDetails.data.director}</p>
-					<p>Producer: {filmDetails.data.producer}</p>
-					<p>Release Date: {filmDetails.data.release_date}</p>
-					<p>Opening Crawl: {filmDetails.data.opening_crawl}</p>
+					<p>Title: {data.title}</p>
+					<p>Episode: {data.episode_id}</p>
+					<p>Director: {data.director}</p>
+					<p>Producer: {data.producer}</p>
+					<p>Release Date: {data.release_date}</p>
+					<p>Opening Crawl: {data.opening_crawl}</p>
 				</>
 			)}
 
 			<ListComponent
 				listTitle='Characters'
-				listEndpoints={filmDetails.data.characters}
+				listEndpoints={data.characters}
 				withLink
 				pathname='character'
 			/>
-			<ListComponent
-				listTitle='Planets'
-				listEndpoints={filmDetails.data.planets}
-			/>
-			<ListComponent
-				listTitle='Starships'
-				listEndpoints={filmDetails.data.starships}
-			/>
-			<ListComponent
-				listTitle='Vehicles'
-				listEndpoints={filmDetails.data.vehicles}
-			/>
-			<ListComponent
-				listTitle='Species'
-				listEndpoints={filmDetails.data.species}
-			/>
+			<ListComponent listTitle='Planets' listEndpoints={data.planets} />
+			<ListComponent listTitle='Starships' listEndpoints={data.starships} />
+			<ListComponent listTitle='Vehicles' listEndpoints={data.vehicles} />
+			<ListComponent listTitle='Species' listEndpoints={data.species} />
 
-			{filmDetails.error && <DisplayError error={filmDetails.error} />}
+			{error && <DisplayError error={error} />}
 		</>
 	);
 };
