@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const ListComponent = ({ listTitle, listEndpoints }) => {
+const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 	const [list, setList] = useState({
 		data: [],
 		loading: false,
@@ -15,6 +16,8 @@ const ListComponent = ({ listTitle, listEndpoints }) => {
 			const res = await Promise.all(promises);
 			res.forEach(result => results.push(result.data));
 
+			console.log('multiRes', results);
+
 			setList(prevState => ({
 				...prevState,
 				data: results,
@@ -24,10 +27,11 @@ const ListComponent = ({ listTitle, listEndpoints }) => {
 
 		const fetchSingleEndpoint = async () => {
 			const res = await axios.get(listEndpoints);
+			console.log('singleRes', res);
 
 			setList(prevState => ({
 				...prevState,
-				data: res.data.results,
+				data: [res.data],
 				loading: false
 			}));
 		};
@@ -39,8 +43,10 @@ const ListComponent = ({ listTitle, listEndpoints }) => {
 			}));
 
 			if (Array.isArray(listEndpoints)) {
+				console.log('is array');
 				fetchMultiEndpoints();
 			} else {
+				console.log('is NOT array');
 				fetchSingleEndpoint();
 			}
 		};
@@ -48,17 +54,28 @@ const ListComponent = ({ listTitle, listEndpoints }) => {
 	}, [listEndpoints]);
 
 	const listData = list.data.map(list => {
-		// const { name } = list;
-		// const name = list.name
-		// console.log('@@@ list:', list);
 		const listItem = list.name || list.title;
-		return <li key={listItem}>{listItem}</li>;
+		return withLink && pathname ? (
+			<li key={listItem}>
+				<Link to={{ pathname: `/${pathname}/${listItem}`, state: { list } }}>
+					{listItem}
+				</Link>
+			</li>
+		) : (
+			<li key={listItem}>{listItem}</li>
+		);
 	});
+
+	const noData = <li>No data available for {listTitle.toLowerCase()}</li>;
 
 	return (
 		<>
 			<h2>{listTitle}</h2>
-			{list.loading ? <p>Loading...</p> : <ul>{listData}</ul>}
+			{list.loading ? (
+				<p>Loading...</p>
+			) : (
+				<ul>{list.data.length > 0 ? listData : noData}</ul>
+			)}
 		</>
 	);
 };

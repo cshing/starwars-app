@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Characters from './Characters';
+// import Characters from './Characters';
 import ListComponent from '../Common/ListComponent';
 
 const initialState = {
@@ -20,7 +20,7 @@ const initialState = {
 // React router pass two props to all the component - match, location
 const FilmDetails = ({ match }) => {
 	// const filmTitle = match.params.title;
-	const { title } = match.params;
+	const { title: filmTitle } = match.params;
 
 	const [filmDetails, setFilmDetails] = useState({
 		data: initialState,
@@ -37,7 +37,7 @@ const FilmDetails = ({ match }) => {
 				loading: true
 			}));
 
-			const url = `https://swapi.dev/api/films/?search=${encodeURI(title)}`;
+			const url = `https://swapi.dev/api/films/?search=${encodeURI(filmTitle)}`;
 			const res = await axios.get(url);
 
 			console.log('res', res);
@@ -49,7 +49,7 @@ const FilmDetails = ({ match }) => {
 			}));
 		};
 		fetchFilmDetails();
-	}, [title]);
+	}, [filmTitle]);
 
 	return (
 		<>
@@ -68,7 +68,14 @@ const FilmDetails = ({ match }) => {
 				</>
 			)}
 
-			<Characters charactersUrlArr={filmDetails.data.characters} />
+			{/* <Characters charactersUrlArr={filmDetails.data.characters} /> */}
+			
+			<ListComponent
+				listTitle='Characters'
+				listEndpoints={filmDetails.data.characters}
+				withLink
+				pathname='character'
+			/>
 			<ListComponent
 				listTitle='Planets'
 				listEndpoints={filmDetails.data.planets}

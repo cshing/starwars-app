@@ -57,5 +57,3 @@ const Characters = ({ charactersUrlArr }) => {
 };
 
 export default Characters;
-
-// question: loading state is already false initially

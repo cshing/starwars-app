@@ -18,6 +18,7 @@ const Films = () => {
 
 			const url = `https://swapi.dev/api/films/`;
 			const res = await axios.get(url);
+			console.log('filmsRes', res);
 			setFilms(prevState => ({
 				...prevState,
 				data: res.data.results,

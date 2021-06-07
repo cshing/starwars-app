@@ -1,8 +1,7 @@
 import ListComponent from '../Common/ListComponent';
 
 const CharacterDetails = ({ location }) => {
-	// const { character } = props.location.state;
-	const { character } = location.state;
+	const character  = location.state.list;
 
 	// state : {
 	// 	name: 'hi',
@@ -43,7 +42,7 @@ const CharacterDetails = ({ location }) => {
 			<p>Birth Year: {birth_year}</p>
 			<p>Gender: {gender}</p>
 
-			{/* <ListComponent listTitle='homeworld' listEndpoints={homeworld} /> */}
+			<ListComponent listTitle='Homeworld' listEndpoints={homeworld} />
 			<ListComponent listTitle='Films' listEndpoints={films} />
 			<ListComponent listTitle='Species' listEndpoints={species} />
 			<ListComponent listTitle='Vehicles' listEndpoints={vehicles} />
