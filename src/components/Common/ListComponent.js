@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import DisplayError from './DisplayError';
 
+// I create this common ListComponent and intend to reuse this anywhere a list of items is required
+// (ie. in film / character details page)
 const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
+	// set up initial state for list
 	const [list, setList] = useState({
 		data: [],
 		loading: false,
@@ -11,13 +14,12 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 	});
 
 	useEffect(() => {
+		// fetch data from the array of endpoints, then set results to data and set loading to false
 		const fetchMultiEndpoints = async () => {
 			const results = [];
 			const promises = listEndpoints.map(url => axios.get(url));
 			const res = await Promise.all(promises);
 			res.forEach(result => results.push(result.data));
-
-			console.log('multiRes', results);
 
 			setList(prevState => ({
 				...prevState,
@@ -26,9 +28,9 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 			}));
 		};
 
+		// fetch data from the single endpoint, then set results to data and set loading to false
 		const fetchSingleEndpoint = async () => {
 			const res = await axios.get(listEndpoints);
-			console.log('singleRes', res);
 
 			setList(prevState => ({
 				...prevState,
@@ -43,21 +45,34 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 				loading: true
 			}));
 
-			if (Array.isArray(listEndpoints)) {
-				console.log('is array');
-				fetchMultiEndpoints();
-			} else {
-				console.log('is NOT array');
-				fetchSingleEndpoint();
+			try {
+				// Since the data endpoints required for fetching subdata of a film/character can be a single URL or an array of URLs,
+				// we need to first check if the listEndpoints is an array or not.
+				// Then we can fetch data with either fetchMultiEndpoints or fetchSingleEndpoint
+				if (Array.isArray(listEndpoints)) {
+					fetchMultiEndpoints();
+				} else {
+					fetchSingleEndpoint();
+				}
+			} catch (error) {
+				setList(prevState => ({
+					...prevState,
+					loading: false,
+					error: 'Error retrieving subdata'
+				}));
 			}
 		};
 		fetchList();
 	}, [listEndpoints]);
+	// Include listEndpoints in the dependency array. useEffect depends on this listEndpoints.
+	// Whenever listEndpoints changes, the useEffect hook is run again.
 
 	const { data, loading, error } = list;
 
 	const listData = data.map(list => {
 		const listItem = list.name || list.title;
+
+		// if both withLink and pathname props are passed down, then display Link component, if not display a plain li
 		return withLink && pathname ? (
 			<li key={listItem}>
 				<Link to={{ pathname: `/${pathname}/${listItem}`, state: { list } }}>

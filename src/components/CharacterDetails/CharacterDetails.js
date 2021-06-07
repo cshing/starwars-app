@@ -1,18 +1,9 @@
 import ListComponent from '../Common/ListComponent';
 
+// React router Link passes down match, location props
+// Use the props.location.state that has been passed down from Link state
 const CharacterDetails = ({ location }) => {
-	const character  = location.state.list;
-
-	// state : {
-	// 	name: 'hi',
-	// }
-
-	// state: {
-	// 	character: {name: 'hi'}
-	// }
-
-	// console.log('character', character);
-	// console.log('state', props.location.state);
+	const character = location.state.list;
 
 	const {
 		name,
