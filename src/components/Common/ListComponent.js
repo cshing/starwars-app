@@ -40,6 +40,7 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		};
 
 		const fetchList = async () => {
+			// initialize loading state to true
 			setList(prevState => ({
 				...prevState,
 				loading: true
@@ -91,7 +92,7 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		<>
 			<h2>{listTitle}</h2>
 
-			{loading ? (
+			{loading || data.length == 0 ? (
 				<p>Loading...</p>
 			) : (
 				<ul>{data.length > 0 ? listData : noData}</ul>
