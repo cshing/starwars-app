@@ -63,21 +63,23 @@ const FilmDetails = ({ match }) => {
 	// Include filmTitle in the dependency array. useEffect depends on this filmTitle.
 	// Whenever filmTitle changes (on the url), the useEffect hook is run again.
 
-	const { data, loading, error } = filmDetails;
-
 	const {
-		title,
-		episode_id,
-		director,
-		producer,
-		release_date,
-		opening_crawl,
-		characters,
-		planets,
-		starships,
-		vehicles,
-		species
-	} = data;
+		data: {
+			title,
+			episode_id,
+			director,
+			producer,
+			release_date,
+			opening_crawl,
+			characters,
+			planets,
+			starships,
+			vehicles,
+			species
+		},
+		loading,
+		error
+	} = filmDetails;
 
 	return (
 		<>
