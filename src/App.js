@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Films from './components/Films';
 import FilmDetails from './components/FilmDetails/FilmDetails';
-import CharacterDetails from './components/CharacterDetails/CharacterDetails';
-import PlanetDetails from './components/PlanetDetails/PlanetDetails';
+import CharacterDetails from './components/ListDetails/CharacterDetails';
+import PlanetDetails from './components/ListDetails/PlanetDetails';
 import './App.css';
 
 function App() {
