@@ -92,7 +92,7 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		<>
 			<h2>{listTitle}</h2>
 
-			{loading || data.length == 0 ? (
+			{loading ? (
 				<p>Loading...</p>
 			) : (
 				<ul>{data.length > 0 ? listData : noData}</ul>
