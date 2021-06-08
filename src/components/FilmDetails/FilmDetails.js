@@ -103,7 +103,12 @@ const FilmDetails = ({ match }) => {
 				withLink
 				pathname='character'
 			/>
-			<ListComponent listTitle='Planets' listEndpoints={planets} />
+			<ListComponent
+				listTitle='Planets'
+				listEndpoints={planets}
+				withLink
+				pathname='planet'
+			/>
 			<ListComponent listTitle='Starships' listEndpoints={starships} />
 			<ListComponent listTitle='Vehicles' listEndpoints={vehicles} />
 			<ListComponent listTitle='Species' listEndpoints={species} />
