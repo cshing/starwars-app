@@ -1,3 +1,19 @@
+# Questions
+
+##### Assuming the Star Wars API was slow, what are some optimizations that could be implemented to improve the user experience?
+
+- A loading spinner to indicate data are loading
+- Lazy loading - to show placeholders or a layout of greyed-out data so that users will know to expect more data will be displayed shortly
+- Use `React.fragments` `<></>` to avoid extra node.
+
+##### Any improvements you would make to your application?
+
+- Implement more CSS
+- Create more subdata details page such as Planets, Starships etc. If we do so, we should add the routers in App.js and add individual subdata component for each type of details page. We should also remove `withLink` and `pathname` props as well as the tenary operator for showing either anchor links or plain list items, because these will no longer be needed if all shall display as accessible anchor links
+- Instead of passing down state via the `<Link>` component, we can have better state management with Context API or Redux, so that all states are retrievable in different components, not just by accessing specific links in the Film Details page.
+- Further refactoring out custom hooks so functions are separated from the component display
+- Implement testing frameworks
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

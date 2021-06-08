@@ -73,6 +73,7 @@ const ListComponent = ({ listTitle, listEndpoints, withLink, pathname }) => {
 		const listItem = list.name || list.title;
 
 		// if both withLink and pathname props are passed down, then display Link component, if not display a plain li
+		// saving the list object as state so the list data are retrievable in the Details Page by clicking this anchor link.
 		return withLink && pathname ? (
 			<li key={listItem}>
 				<Link to={{ pathname: `/${pathname}/${listItem}`, state: { list } }}>

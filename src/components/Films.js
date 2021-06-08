@@ -65,9 +65,9 @@ const Films = () => {
 	return (
 		<>
 			<h1>Starwars Film List</h1>
-			<span>
+			<>
 				Search: <input value={search} onChange={e => displaySearch(e)} />
-			</span>
+			</>
 			{loading ? <p>Loading...</p> : <ul>{filmsData}</ul>}
 			{error && <DisplayError error={error} />}
 		</>
